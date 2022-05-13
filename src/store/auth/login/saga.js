@@ -7,15 +7,15 @@ import { apiError, loginSuccess, logoutUserSuccess } from "./actions"
 //Include Both Helper File with needed methods
 import { getFirebaseBackend } from "../../../helpers/firebase_helper"
 import {
-  postFakeLogin,
   postJwtLogin,
   postSocialLogin,
-} from "../../../helpers/fakebackend_helper"
+} from "../../../helpers/backend_helper"
+import { POST_LOGIN } from "../../../helpers/url_helper"
 
 const fireBaseBackend = getFirebaseBackend()
 
 function* loginUser({ payload: { user, history } }) {
-  
+
   try {
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       const response = yield call(
@@ -24,24 +24,16 @@ function* loginUser({ payload: { user, history } }) {
         user.password
       )
       yield put(loginSuccess(response))
+      history.push("/dashboard")
     } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-      const response = yield call(postJwtLogin, {
+      const response = yield call(postJwtLogin,POST_LOGIN, {
         email: user.email,
         password: user.password,
       })
       localStorage.setItem("authUser", JSON.stringify(response))
       yield put(loginSuccess(response))
-    } else if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
-      
-      const response = yield call(postFakeLogin, {
-        email: user.email,
-        password: user.password,
-      })
-      
-      localStorage.setItem("authUser", JSON.stringify(response))
-      yield put(loginSuccess(response))
+      history.push("/dashboard")
     }
-    history.push("/dashboard")
   } catch (error) {
     yield put(apiError(error))
   }
@@ -50,7 +42,6 @@ function* loginUser({ payload: { user, history } }) {
 function* logoutUser({ payload: { history } }) {
   try {
     localStorage.removeItem("authUser")
-
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       const response = yield call(fireBaseBackend.logout)
       yield put(logoutUserSuccess(response))

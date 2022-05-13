@@ -7,9 +7,9 @@ import { userForgetPasswordSuccess, userForgetPasswordError } from "./actions"
 //Include Both Helper File with needed methods
 import { getFirebaseBackend } from "../../../helpers/firebase_helper"
 import {
-  postFakeForgetPwd,
   postJwtForgetPwd,
-} from "../../../helpers/fakebackend_helper"
+} from "../../../helpers/backend_helper"
+import { POST_PASSWORD_FORGET } from "../../../helpers/url_helper"
 
 const fireBaseBackend = getFirebaseBackend()
 
@@ -26,18 +26,7 @@ function* forgetUser({ payload: { user, history } }) {
         )
       }
     } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-      const response = yield call(postJwtForgetPwd, "/jwt-forget-pwd", {
-        email: user.email,
-      })
-      if (response) {
-        yield put(
-          userForgetPasswordSuccess(
-            "Reset link are sended to your mailbox, check there first"
-          )
-        )
-      }
-    } else {
-      const response = yield call(postFakeForgetPwd, "/fake-forget-pwd", {
+      const response = yield call(postJwtForgetPwd, POST_PASSWORD_FORGET, {
         email: user.email,
       })
       if (response) {

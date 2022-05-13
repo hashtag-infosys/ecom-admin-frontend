@@ -7,9 +7,9 @@ import { registerUserSuccessful, registerUserFailed } from "./actions"
 //Include Both Helper File with needed methods
 import { getFirebaseBackend } from "../../../helpers/firebase_helper"
 import {
-  postFakeRegister,
   postJwtRegister,
-} from "../../../helpers/fakebackend_helper"
+} from "../../../helpers/backend_helper"
+import { POST_REGISTER } from "../../../helpers/url_helper"
 
 // initialize relavant method of both Auth
 const fireBaseBackend = getFirebaseBackend()
@@ -25,11 +25,7 @@ function* registerUser({ payload: { user } }) {
       )
       yield put(registerUserSuccessful(response))
     } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-      const response = yield call(postJwtRegister, "/post-jwt-register", user)
-      console.log(response)
-      yield put(registerUserSuccessful(response))
-    } else if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
-      const response = yield call(postFakeRegister, user)
+      const response = yield call(postJwtRegister, POST_REGISTER, user)
       yield put(registerUserSuccessful(response))
     }
   } catch (error) {

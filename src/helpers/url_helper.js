@@ -1,20 +1,17 @@
-import { API_URL } from "./api_helper";
-
-const url=API_URL
-
 //REGISTER
-export const POST_FAKE_REGISTER = "users/register"
+export const POST_REGISTER = "users/register"
+export const POST_RESET = "users/reset-password"
 
 //LOGIN
-export const POST_FAKE_LOGIN ="users/authenticate"
-export const POST_FAKE_JWT_LOGIN = "/post-jwt-login"
-export const POST_FAKE_PASSWORD_FORGET = "users/forgot-password"
-export const POST_FAKE_JWT_PASSWORD_FORGET = "/jwt-forget-pwd"
+export const POST_LOGIN ="users/authenticate"
+export const POST_JWT_LOGIN = "/post-jwt-login"
+export const POST_PASSWORD_FORGET = "users/forgot-password"
+export const POST_JWT_PASSWORD_FORGET = "/jwt-forget-pwd"
 export const SOCIAL_LOGIN = "/social-login"
 
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile"
-export const POST_EDIT_PROFILE = "/post-fake-profile"
+export const POST_EDIT_PROFILE = "/post-profile"
 
 //PRODUCTS
 export const GET_PRODUCTS = "/products"

@@ -37,7 +37,6 @@ const UserProfile = props => {
         setemail(obj.email)
         setidx(obj.uid)
       } else if (
-        process.env.REACT_APP_DEFAULTAUTH === "fake" ||
         process.env.REACT_APP_DEFAULTAUTH === "jwt"
       ) {
         setname(obj.username)
@@ -57,7 +56,7 @@ const UserProfile = props => {
   return (
     <React.Fragment>
       <div className="page-content">
-        
+
           {/* Render Breadcrumb */}
           <Breadcrumb title="Qovex" breadcrumbItem="Profile" />
 

@@ -2,7 +2,7 @@ import axios from "axios"
 import { post, del, get, put } from "./api_helper"
 import * as url from "./url_helper"
 
-
+const API_URL = "http://localhost:4000"
 // Gets the logged in user data from local session
 const getLoggedInUser = () => {
   const user = localStorage.getItem("user")
@@ -16,23 +16,54 @@ const isUserAuthenticated = () => {
 }
 
 // Register Method
-const postFakeRegister = (data) => post(url.POST_FAKE_REGISTER, data)
+const postRegister = (data) => post(url.POST_REGISTER, data)
 
 // Login Method
-const postFakeLogin = data => post(url.POST_FAKE_LOGIN, data)
+const postLogin = data => post(url.POST_LOGIN, data)
 
 // postForgetPwd
-const postFakeForgetPwd = data => post(url.POST_FAKE_PASSWORD_FORGET, data)
+const postForgetPwd = data => post(url.POST_PASSWORD_FORGET, data)
 
 // Edit profile
 const postJwtProfile = data => post(url.POST_EDIT_JWT_PROFILE, data)
 
-const postFakeProfile = data => post(url.POST_EDIT_PROFILE, data)
+const postProfile = data => post(url.POST_EDIT_PROFILE, data)
 
 // Register Method
-const postJwtRegister = (url, data) => {
+const postJwtRegister = (path, data) => {
   return axios
-    .post(url, data)
+    .post(`${API_URL}/${path}`, data)
+    .then(response => {
+      if (response.status >= 200 || response.status <= 299) return response.data
+      throw response.data
+    })
+    .catch(err => {
+      let message
+      if (err.response && err.response.status) {
+        switch (err.response.status) {
+          case 404:
+            message = "Sorry! the page you are looking for could not be found"
+            break
+          case 500:
+            message =
+              "Sorry! something went wrong, please contact our support team"
+            break
+          case 401:
+            message = "Invalid credentials"
+            break
+          default:
+            message = err[1]
+            break
+        }
+      }
+      throw message
+    })
+}
+
+// Register Method
+const postJwtReset = (path, data) => {
+  return axios
+    .post(`${API_URL}/${path}`, data)
     .then(response => {
       if (response.status >= 200 || response.status <= 299) return response.data
       throw response.data
@@ -61,9 +92,9 @@ const postJwtRegister = (url, data) => {
 }
 
 // Login Method
-const postJwtLogin =(url, data) => {
+const postJwtLogin =(path, data) => {
   return axios
-    .post(url, data)
+    .post(`${API_URL}/${path}`, data)
     .then(response => {
       if (response.status >= 200 || response.status <= 299) return response.data
       throw response.data
@@ -83,7 +114,7 @@ const postJwtLogin =(url, data) => {
             message = "Invalid credentials"
             break
           default:
-            message = err[1]
+            message = err
             break
         }
       }
@@ -92,9 +123,9 @@ const postJwtLogin =(url, data) => {
 }
 
 // postForgetPwd
-const postJwtForgetPwd = (url, data) => {
+const postJwtForgetPwd = (path, data) => {
   return axios
-    .post(url, data)
+    .post(`${API_URL}/${path}`, data)
     .then(response => {
       if (response.status >= 200 || response.status <= 299) return response.data
       throw response.data
@@ -182,11 +213,12 @@ export const getUserProfile = () => get(url.GET_USER_PROFILE)
 export {
   getLoggedInUser,
   isUserAuthenticated,
-  postFakeRegister,
-  postFakeLogin,
-  postFakeProfile,
-  postFakeForgetPwd,
+  postRegister,
+  postLogin,
+  postProfile,
+  postForgetPwd,
   postJwtRegister,
+  postJwtReset,
   postJwtLogin,
   postJwtForgetPwd,
   postJwtProfile,

@@ -18,12 +18,6 @@ import NonAuthLayout from "./components/NonAuthLayout"
 // Import scss
 import "./assets/scss/theme.scss"
 
-
-import fakeBackend from "./helpers/AuthType/fakeBackend"
-
-// Activating fake backend
-fakeBackend()
-
 const App = props => {
   function getLayout() {
     let layoutCls = VerticalLayout
@@ -54,7 +48,7 @@ const App = props => {
               isAuthProtected={false}
             />
           ))}
-          
+
           {userRoutes.map((route, idx) => (
             <Authmiddleware
               path={route.path}
