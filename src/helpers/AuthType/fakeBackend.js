@@ -19,6 +19,7 @@ let users = [
   },
 ]
 
+// 
 const fakeBackend = () => {
   // This sets the mock adapter on the default instance
   const mock = new MockAdapter(axios)
@@ -26,6 +27,7 @@ const fakeBackend = () => {
 mock.onPost(url.POST_FAKE_REGISTER).reply(config => {
     const user = JSON.parse(config["data"])
     users.push(user)
+    console.log("user",user)
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve([200, user])
