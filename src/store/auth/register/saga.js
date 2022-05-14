@@ -1,7 +1,7 @@
 import { takeEvery, fork, put, all, call } from "redux-saga/effects"
 
 //Account Redux states
-import { REGISTER_USER } from "./actionTypes"
+import { REGISTER_USER,REGISTER_USER_SUCCESSFUL } from "./actionTypes"
 import { registerUserSuccessful, registerUserFailed } from "./actions"
 
 //Include Both Helper File with needed methods
@@ -18,7 +18,7 @@ const fireBaseBackend = getFirebaseBackend()
 function* registerUser({ payload: { user } }) {
   try {
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      const response = yield call(
+      var response = yield call(
         fireBaseBackend.registerUser,
         user.email,
         user.password
@@ -26,7 +26,7 @@ function* registerUser({ payload: { user } }) {
       yield put(registerUserSuccessful(response))
     } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
       const response = yield call(postJwtRegister, POST_REGISTER, user)
-      yield put(registerUserSuccessful(response))
+      yield put(registerUserSuccessful(response.message))
     }
   } catch (error) {
     yield put(registerUserFailed(error))
@@ -35,9 +35,9 @@ function* registerUser({ payload: { user } }) {
 
 export function* watchUserRegister() {
   yield takeEvery(REGISTER_USER, registerUser)
-}
 
-function* accountSaga() {
+}
+ function* accountSaga() {
   yield all([fork(watchUserRegister)])
 }
 

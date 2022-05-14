@@ -59,9 +59,9 @@ const ForgetPasswordPage = props => {
                         {props.forgetError}
                       </Alert>
                     ) : null}
-                    {props.forgetSuccessMsg ? (
+                    {props.user ? (
                       <Alert color="success" className="text-center mb-4" style={{ marginTop: "13px" }}>
-                        {props.forgetSuccessMsg}
+                        {props.user}
                       </Alert>
                     ) : null}
 
@@ -113,12 +113,14 @@ ForgetPasswordPage.propTypes = {
   forgetError: PropTypes.any,
   forgetSuccessMsg: PropTypes.any,
   history: PropTypes.object,
-  userForgetPassword: PropTypes.func
+  userForgetPassword: PropTypes.func,
+  user: PropTypes.any,
+
 }
 
 const mapStatetoProps = state => {
-  const { forgetError, forgetSuccessMsg } = state.ForgetPassword
-  return { forgetError, forgetSuccessMsg }
+  const { user,forgetError, forgetSuccessMsg } = state.ForgetPassword
+  return { user,forgetError, forgetSuccessMsg }
 }
 
 export default withRouter(

@@ -68,11 +68,11 @@ const ResetPassword = props => {
                         handleValidSubmit(e, v)
                       }}
                     >
-                      {props.result && props.result ? (
-                        <Alert color="success">
-                          Reset Password Successfully
-                        </Alert>
-                      ) : null}
+                     {props.user ? (
+                      <Alert color="success" className="text-center mb-4" style={{ marginTop: "13px" }}>
+                        {props.user}
+                      </Alert>
+                    ) : null}
 
                       {props?.resetError && props?.resetError ? (
                         <Alert color="danger">
@@ -137,12 +137,12 @@ ResetPassword.propTypes = {
   resetUser: PropTypes.func,
   resetUserFailed: PropTypes.func,
   resetError: PropTypes.any,
-  result: PropTypes.any,
+  user: PropTypes.any,
 }
 
 const mapStatetoProps = state => {
-  const { result, resetError, loading } = state.Reset
-  return { result, resetError, loading }
+  const { user, resetError, loading } = state.Reset
+  return { user, resetError, loading }
 }
 
 export default connect(mapStatetoProps, {

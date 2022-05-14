@@ -8,7 +8,7 @@ const initialState = {
   resetError: null,
   message: null,
   loading: false,
-  result: null,
+  user: null,
 }
 
 const reset = (state = initialState, action) => {
@@ -24,14 +24,14 @@ const reset = (state = initialState, action) => {
       state = {
         ...state,
         loading: false,
-        result: action.payload,
+        user: action.payload,
         resetError: null,
       }
       break
     case RESET_USER_FAILED:
       state = {
         ...state,
-        result: null,
+        user: null,
         loading: false,
         resetError: action.payload,
       }

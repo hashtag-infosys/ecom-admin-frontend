@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   registrationError: null,
-  message: null,
+  message: [],
   loading: false,
   user: null,
 }
@@ -18,6 +18,7 @@ const account = (state = initialState, action) => {
         ...state,
         loading: true,
         registrationError: null,
+
       }
       break
     case REGISTER_USER_SUCCESSFUL:

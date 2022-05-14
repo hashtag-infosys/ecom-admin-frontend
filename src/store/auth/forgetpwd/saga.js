@@ -20,21 +20,17 @@ function* forgetUser({ payload: { user, history } }) {
       const response = yield call(fireBaseBackend.forgetPassword, user.email)
       if (response) {
         yield put(
-          userForgetPasswordSuccess(
-            "Reset link are sended to your mailbox, check there first"
-          )
-        )
+          userForgetPasswordSuccess(response.message))
+        // console.log(response.message)
+
       }
     } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
       const response = yield call(postJwtForgetPwd, POST_PASSWORD_FORGET, {
         email: user.email,
       })
+      console.log('response',response)
       if (response) {
-        yield put(
-          userForgetPasswordSuccess(
-            "Reset link are sended to your mailbox, check there first"
-          )
-        )
+        yield put(userForgetPasswordSuccess(response.message))
       }
     }
   } catch (error) {

@@ -6,7 +6,7 @@ import { Row, Col, CardBody, Card, Alert, Container } from "reactstrap"
 import { AvForm, AvField } from "availity-reactstrap-validation"
 
 // action
-import { registerUser, apiError, registerUserFailed } from "../../store/actions"
+import { registerUser, apiError, registerUserFailed, registerUserSuccessful } from "../../store/actions"
 
 // Redux
 import { connect } from "react-redux"
@@ -61,18 +61,19 @@ const Register = props => {
                         handleValidSubmit(e, v)
                       }}
                     >
-                      {props.user && props.user ? (
+                      {props.user && 
+                      props.user ? (
                         <Alert color="success">
-                          Register User Successfully
+                          {props.user}
                         </Alert>
                       ) : null}
 
                       {props.registrationError &&
                         props.registrationError ? (
-                          <Alert color="danger">
-                            {props.registrationError}
-                          </Alert>
-                        ) : null}
+                        <Alert color="danger">
+                          {props.registrationError}
+                        </Alert>
+                      ) : null}
 
                       <div className="mb-3">
                         <AvField
@@ -131,12 +132,12 @@ const Register = props => {
                 <p>Already have an account ? <a href="/login" className="fw-medium text-primary">
                   Login</a> </p>
                 <p>© {new Date().getFullYear()} Qovex. Crafted with <i
-                    className="mdi mdi-heart text-danger"></i> by Themesbrand
-                        </p>
+                  className="mdi mdi-heart text-danger"></i> by Themesbrand
+                </p>
               </div>
             </Col>
           </Row>
-          </Container>
+        </Container>
       </div>
     </React.Fragment>
   )
@@ -146,16 +147,19 @@ Register.propTypes = {
   registerUser: PropTypes.func,
   registerUserFailed: PropTypes.func,
   registrationError: PropTypes.any,
+  registerUserSuccessful: PropTypes.func,
+  registerationSuccess: PropTypes.any,
   user: PropTypes.any,
 }
 
 const mapStatetoProps = state => {
-  const { user, registrationError, loading } = state.Account
-  return { user, registrationError, loading }
+  const { user, registrationError, registerationSuccess, loading } = state.Account
+  return { user, registrationError, registerationSuccess, loading }
 }
 
 export default connect(mapStatetoProps, {
   registerUser,
   apiError,
   registerUserFailed,
+  registerUserSuccessful
 })(Register)

@@ -4,17 +4,17 @@ import {
   RESET_USER_FAILED,
 } from "./actionTypes"
 
-export const resetUser = values => {
+export const resetUser = user => {
   return {
     type: RESET_USER,
-    payload: values,
+    payload: { user },
   }
 }
 
-export const resetUserSuccessful = values => {
+export const resetUserSuccessful = user => {
   return {
     type: RESET_USER_SUCCESSFUL,
-    payload: values,
+    payload: user,
   }
 }
 

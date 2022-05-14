@@ -11,10 +11,10 @@ export const userForgetPassword = (user, history) => {
   }
 }
 
-export const userForgetPasswordSuccess = message => {
+export const userForgetPasswordSuccess = user => {
   return {
     type: FORGET_PASSWORD_SUCCESS,
-    payload: message,
+    payload: user,
   }
 }
 
