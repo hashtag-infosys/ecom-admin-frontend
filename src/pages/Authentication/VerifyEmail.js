@@ -6,7 +6,7 @@ import { Row, Col, CardBody, Card, Alert, Container } from "reactstrap"
 import { AvForm, AvField } from "availity-reactstrap-validation"
 
 // action
-import { resetUser, apiError, resetUserFailed } from "../../store/actions"
+import { verifyEmail,apiError,verifyEmailFailed} from '../../store/actions'
 
 // Redux
 import { connect } from "react-redux"
@@ -19,13 +19,13 @@ function useQuery() {
   return new URLSearchParams(useLocation().search)
 }
 
-const ResetPassword = props => {
+const VerifyEmail = props => {
   const query = useQuery()
   const token = query.get('token')
 
   const handleValidSubmit = (event, values) => {
     values.token = token
-    props.resetUser(values)
+    props.verifyEmail(values)
   }
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const ResetPassword = props => {
                 <div className="bg-login text-center">
                   <div className="bg-login-overlay"></div>
                   <div className="position-relative">
-                    <h5 className="text-white font-size-20">Reset Password</h5>
+                    <h5 className="text-white font-size-20">Verification</h5>
                     {/* <p className="text-white-50 mb-0">Get your free Qovex account now</p> */}
                     <Link to="/" className="logo logo-admin mt-4">
                       <img src={logo} alt="" height="30" />
@@ -74,9 +74,9 @@ const ResetPassword = props => {
                       </Alert>
                     ) : null}
 
-                      {props?.resetError && props?.resetError ? (
+                      {props?.verifyError && props?.verifyError ? (
                         <Alert color="danger">
-                          {props.resetError}
+                          {props.verifyError}
                         </Alert>
                       ) : null}
 
@@ -86,32 +86,12 @@ const ResetPassword = props => {
                             {props.registrationError}
                           </Alert>
                         ) : null}
-                          
-                      <div className="mb-3">
-                        <AvField
-                          name="password"
-                          label="New Password"
-                          type="password"
-                          required
-                          placeholder="Enter New Password"
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <AvField
-                          name="confirmPassword"
-                          label="Confirm New Password"
-                          type="password"
-                          required
-                          placeholder="Enter Password Again"
-                        />
-                      </div>
-
                       <div className="mt-4">
                         <button
                           className="btn btn-primary w-100 waves-effect waves-light"
                           type="submit"
                         >
-                          Reset Password
+                          Verify
                         </button>
                       </div>
                     </AvForm>
@@ -134,20 +114,20 @@ const ResetPassword = props => {
   )
 }
 
-ResetPassword.propTypes = {
-  resetUser: PropTypes.func,
-  resetUserFailed: PropTypes.func,
-  resetError: PropTypes.any,
+VerifyEmail.propTypes = {
+  verifyEmail: PropTypes.func,
+  verifyEmailFailed: PropTypes.func,
+  verifyError: PropTypes.any,
   user: PropTypes.any,
 }
 
 const mapStatetoProps = state => {
-  const { user, resetError, loading } = state.Reset
-  return { user, resetError, loading }
+  const { user, verifyError, loading } = state.Verify
+  return { user, verifyError, loading }
 }
 
 export default connect(mapStatetoProps, {
-  resetUser,
+  verifyEmail,
   apiError,
-  resetUserFailed,
-})(ResetPassword)
+  verifyEmailFailed,
+})(VerifyEmail)

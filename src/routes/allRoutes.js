@@ -10,6 +10,7 @@ import Logout from "../pages/Authentication/Logout"
 import Register from "../pages/Authentication/Register"
 import ResetPassword from "../pages/Authentication/ResetPassword"
 import ForgetPwd from "../pages/Authentication/ForgetPassword"
+import VerifyEmail from "../pages/Authentication/VerifyEmail"
 
 const userRoutes = [
   { path: "/dashboard", component: Dashboard },
@@ -24,6 +25,8 @@ const authRoutes = [
   { path: "/forgot-password", component: ForgetPwd },
   { path: "/register", component: Register },
   { path: "/reset-password", component: ResetPassword },
+  { path: "/verify-email", component: VerifyEmail },
+
 ]
 
 export { userRoutes, authRoutes }

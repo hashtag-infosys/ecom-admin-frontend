@@ -1,5 +1,6 @@
 //REGISTER
 export const POST_REGISTER = "users/register"
+export const POST_VERIFY_EMAIL="users/verify-email"
 export const POST_RESET = "users/reset-password"
 
 //LOGIN

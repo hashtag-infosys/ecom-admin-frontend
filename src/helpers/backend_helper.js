@@ -24,10 +24,12 @@ const postLogin = data => post(url.POST_LOGIN, data)
 // postForgetPwd
 const postForgetPwd = data => post(url.POST_PASSWORD_FORGET, data)
 
+
 // Edit profile
 const postJwtProfile = data => post(url.POST_EDIT_JWT_PROFILE, data)
 
 const postProfile = data => post(url.POST_EDIT_PROFILE, data)
+
 
 // Register Method
 const postJwtRegister = (path, data) => {
@@ -91,6 +93,7 @@ const postJwtReset = (path, data) => {
     })
 }
 
+
 // Login Method
 const postJwtLogin =(path, data) => {
   return axios
@@ -152,6 +155,38 @@ const postJwtForgetPwd = (path, data) => {
       throw message
     })
 }
+
+
+const postVerifyEmail = (path, data) => {
+  return axios
+    .post(`${API_URL}/${path}`, data)
+    .then(response => {
+      if (response.status >= 200 || response.status <= 299) return response.data
+      throw response.data
+    })
+    .catch(err => {
+      let message
+      if (err.response && err.response.status) {
+        switch (err.response.status) {
+          case 404:
+            message = "Sorry! the page you are looking for could not be found"
+            break
+          case 500:
+            message =
+              "Sorry! something went wrong, please contact our support team"
+            break
+          case 401:
+            message = "Invalid credentials"
+            break
+          default:
+            message = err[1]
+            break
+        }
+      }
+      throw message
+    })
+}
+
 
 // postSocialLogin
 export const postSocialLogin = data => post(url.SOCIAL_LOGIN, data)
@@ -222,4 +257,5 @@ export {
   postJwtLogin,
   postJwtForgetPwd,
   postJwtProfile,
+  postVerifyEmail
 }

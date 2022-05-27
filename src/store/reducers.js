@@ -9,6 +9,7 @@ import Account from "./auth/register/reducer"
 import Reset from "./auth/reset/reducer"
 import ForgetPassword from "./auth/forgetpwd/reducer"
 import Profile from "./auth/profile/reducer"
+import Verify from "./auth/verifyemail/reducer"
 
 //Calendar
 import calendar from "./calendar/reducer"
@@ -34,6 +35,8 @@ const rootReducer = combineReducers({
   chat,
   tasks,
   contacts,
+  Verify
+  
 })
 
 export default rootReducer

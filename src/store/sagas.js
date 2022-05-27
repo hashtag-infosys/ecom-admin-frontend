@@ -11,6 +11,7 @@ import calendarSaga from "./calendar/saga"
 import chatSaga from "./chat/saga"
 import tasksSaga from "./tasks/saga"
 import contactsSaga from "./contacts/saga"
+import VerifyEmailSaga from "./auth/verifyemail/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -20,6 +21,7 @@ export default function* rootSaga() {
     fork(AuthSaga),
     ProfileSaga(),
     ForgetSaga(),
+    VerifyEmailSaga(),
     fork(LayoutSaga),
     fork(calendarSaga),
     fork(chatSaga),

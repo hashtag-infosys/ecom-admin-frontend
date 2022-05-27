@@ -19,6 +19,7 @@ const Register = props => {
   // handleValidSubmit
   const handleValidSubmit = (event, values) => {
     props.registerUser(values)
+    
   }
 
   useEffect(() => {

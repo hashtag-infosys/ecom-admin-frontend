@@ -6,6 +6,7 @@ export * from "./auth/login/actions"
 export * from "./auth/forgetpwd/actions"
 export * from "./auth/reset/actions"
 export * from "./auth/profile/actions"
+export * from "./auth/verifyemail/actions"
 
 //Calendar
 export * from "./calendar/actions"
